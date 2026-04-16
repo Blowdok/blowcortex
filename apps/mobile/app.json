@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "BlowCortex",
+    "slug": "blowcortex",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "scheme": "blowcortex",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.blowdok.blowcortex"
+    },
+    "android": {
+      "package": "com.blowdok.blowcortex"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

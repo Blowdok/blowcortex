@@ -1,0 +1,8 @@
+{
+  "extends": "@blowcortex/config/tsconfig/node",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.test.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

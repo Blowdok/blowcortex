@@ -1,0 +1,54 @@
+# Stack de développement local pour BlowCortex.
+# Démarrage : `pnpm docker:up`  /  Arrêt : `pnpm docker:down`
+#
+# - Postgres 16 expose 5432 et persiste sur le volume `blowcortex-pgdata`.
+# - Redis Stack 7 inclut RediSearch + vector search (utilisés en Phase 2 pour
+#   le cache sémantique). Expose 6379 (Redis) et 8001 (Redis Insight UI).
+#
+# Les credentials par défaut sont inoffensifs (env locale) ; .env.local pointe
+# déjà vers `postgres://blowcortex:blowcortex@localhost:5432/blowcortex`.
+
+name: blowcortex
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: blowcortex-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: blowcortex
+      POSTGRES_PASSWORD: blowcortex
+      POSTGRES_DB: blowcortex
+      # Active les locales C pour des perfs maximum sur les recherches strictes.
+      POSTGRES_INITDB_ARGS: '--locale=C --encoding=UTF8'
+    ports:
+      - '5432:5432'
+    volumes:
+      - blowcortex-pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U blowcortex -d blowcortex']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis/redis-stack:7.4.0-v1
+    container_name: blowcortex-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+      - '8001:8001'
+    volumes:
+      - blowcortex-redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  blowcortex-pgdata:
+    name: blowcortex-pgdata
+  blowcortex-redisdata:
+    name: blowcortex-redisdata

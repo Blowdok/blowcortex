@@ -1,0 +1,18 @@
+# Normalisation des fins de ligne (cohérence cross-OS, important sous Windows)
+* text=auto eol=lf
+
+# Binaires
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.woff binary
+*.woff2 binary
+
+# Verrous : laisser tels quels
+pnpm-lock.yaml -text

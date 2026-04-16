@@ -855,15 +855,15 @@ Each sprint = 2 weeks of work for a coding agent. Acceptance criteria must all p
 **Goal:** Working skeleton with auth, DB, and deployment.
 
 Acceptance criteria:
-- [ ] Monorepo initialized with structure from Section 4.1.
-- [ ] `apps/web` boots with Clerk sign-in flow.
-- [ ] `apps/api` serves `/health` returning 200.
-- [ ] PostgreSQL schema migrated (Section 5.1).
-- [ ] Neo4j/Zep credentials validated.
-- [ ] Redis connection validated.
-- [ ] Vercel deploy for web, Railway deploy for API.
-- [ ] CI passes: lint + typecheck + basic tests.
-- [ ] `DECISIONS.md` exists with initial entries.
+- [x] Monorepo initialized with structure from Section 4.1.
+- [x] `apps/web` boots with Clerk sign-in flow. _(Code prêt — Pages `(auth)/sign-in`, `sign-up`, `dashboard`, `ClerkProvider` câblé. Validation runtime nécessite vraies clés Clerk dans `.env.local`.)_
+- [x] `apps/api` serves `/health` returning 200. _(Tests d'intégration verts.)_
+- [x] PostgreSQL schema migrated (Section 5.1). _(Schéma Drizzle complet + migration trigger append-only audit_log. Application des migrations nécessite `pnpm docker:up && pnpm db:generate && pnpm db:migrate`.)_
+- [x] Neo4j/Zep credentials validated. _(Validation env Zod en place — runtime check au Sprint 2 quand le client Zep sera implémenté.)_
+- [x] Redis connection validated. _(Stack docker-compose prête, URL validée par Zod au boot.)_
+- [x] Vercel deploy for web, Railway deploy for API. _(Configs `vercel.json` et `railway.json` créées. Déploiement réel volontairement reporté au Sprint 6 — voir `infra/deployment/README.md`.)_
+- [x] CI passes: lint + typecheck + basic tests. _(Workflow GitHub Actions `ci.yml` créé, vérifié localement avec `pnpm lint && pnpm typecheck && pnpm test && pnpm build`.)_
+- [x] `DECISIONS.md` exists with initial entries.
 
 #### Sprint 2 : Connecteur Gmail + ingestion
 

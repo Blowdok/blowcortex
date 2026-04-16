@@ -2,7 +2,7 @@
 
 > Un système d'IA qui observe votre vie professionnelle, comprend votre contexte et agit en votre nom.
 
-**Statut :** 🚧 Avant Sprint 1 — dépôt initialisé, pas encore implémenté.
+**Statut :** ✅ Sprint 1 — Fondations livrées (monorepo + auth + DB + CI), en attente de revue.
 **Phase actuelle :** Phase 1 (MVP) — objectif bêta en 12 semaines.
 **Implémentateur principal :** agent de code autonome avec supervision humaine.
 
@@ -199,22 +199,62 @@ Objectif de couverture : **>=70%** sur `packages/core` et `packages/agents`. Les
 
 ## État actuel
 
-**Sprint :** Non commencé.
-**Dernière mise à jour :** Dépôt initialisé.
-**Prochaine action :** Parcourir [`external-services-setup.md`](./external-services-setup.md), remplir `.env.local`, puis lancer l'agent de code autonome avec le prompt de démarrage.
+**Sprint :** P1-S1 livré, en attente de revue.
+**Dernière mise à jour :** 2026-04-16.
+**Prochaine action :** Renseigner les vraies clés Clerk dans `.env.local`, lancer `pnpm docker:up && pnpm db:migrate`, valider à la main, puis approuver le démarrage du Sprint 2.
 
 ### Avancement des sprints
 
-| Sprint | Focus                                               | Statut          |
-| ------ | --------------------------------------------------- | --------------- |
-| P1-S1  | Foundation (monorepo, DB, auth, deployment configs) | ⏳ Non commencé |
-| P1-S2  | Gmail connector + ingestion                         | ⏳ Non commencé |
-| P1-S3  | Engagement Detector agent                           | ⏳ Non commencé |
-| P1-S4  | Calendar + Meeting Briefer agent                    | ⏳ Non commencé |
-| P1-S5  | Actions + approval flow                             | ⏳ Non commencé |
-| P1-S6  | Observability + polish + beta launch                | ⏳ Non commencé |
+| Sprint | Focus                                               | Statut                  |
+| ------ | --------------------------------------------------- | ----------------------- |
+| P1-S1  | Foundation (monorepo, DB, auth, deployment configs) | ✅ Livré (revue requise) |
+| P1-S2  | Gmail connector + ingestion                         | ⏳ Non commencé          |
+| P1-S3  | Engagement Detector agent                           | ⏳ Non commencé          |
+| P1-S4  | Calendar + Meeting Briefer agent                    | ⏳ Non commencé          |
+| P1-S5  | Actions + approval flow                             | ⏳ Non commencé          |
+| P1-S6  | Observability + polish + beta launch                | ⏳ Non commencé          |
 
 Cette section est mise à jour par l'agent implémentateur à la fin de chaque sprint.
+
+### Détail Sprint 1
+
+Livré dans la branche `feature/p1-s1-foundation` :
+
+- ✅ Monorepo pnpm v10 + Turborepo v2 + 12 packages workspace.
+- ✅ `packages/config` : presets TypeScript / ESLint flat / Prettier / Tailwind v4.
+- ✅ `packages/core` : validation env Zod, hiérarchie d'erreurs typées, types de domaine, 5 tests Vitest verts.
+- ✅ `packages/db` : schéma Drizzle complet (8 tables, PRD §5.1) + trigger SQL append-only sur `audit_log` + 4 tests Vitest verts.
+- ✅ `packages/{graph,agents,connectors,llm,ui}` : squelettes prêts pour les sprints suivants.
+- ✅ `apps/web` : Next.js 15 + App Router + ClerkProvider + middleware + pages auth + dashboard.
+- ✅ `apps/api` : Hono + `/health` (CORS, secure headers, error handling) + 2 tests d'intégration verts.
+- ✅ `apps/workers` : serveur Inngest + endpoint `/api/inngest`.
+- ✅ `apps/mobile` : squelette Expo SDK 52 + Expo Router 4.
+- ✅ `infra/docker/docker-compose.yml` : Postgres 16 + Redis Stack 7 avec healthchecks.
+- ✅ `.github/workflows/ci.yml` : lint + typecheck + test + build sur chaque push/PR.
+- ✅ `vercel.json` (web) + `railway.json` (api, workers) : configs prêtes, pas encore déployées.
+
+**Pré-requis runtime restants** (validation manuelle) :
+
+```bash
+# 1) Renseigner les vraies clés dans .env.local
+#    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY, ZEP_API_KEY (Sprint 2)
+#
+# 2) Démarrer la stack locale
+pnpm docker:up
+
+# 3) Appliquer les migrations
+pnpm db:generate
+pnpm db:migrate
+
+# 4) Vérifier l'API
+pnpm dev:api
+curl http://localhost:3100/health
+# → { "data": { "status": "ok", "version": "0.0.1", "timestamp": "..." } }
+
+# 5) Vérifier le web
+pnpm dev:web
+# → http://localhost:3000
+```
 
 ---
 

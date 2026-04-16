@@ -1,0 +1,47 @@
+{
+  "name": "@blowcortex/core",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Logique métier transverse : types de domaine, schémas Zod, validation env, erreurs typées.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "import": "./dist/env.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "import": "./dist/errors.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests",
+    "clean": "rimraf dist .turbo"
+  },
+  "dependencies": {
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@blowcortex/config": "workspace:*",
+    "@types/node": "22.10.5",
+    "eslint": "9.18.0",
+    "rimraf": "6.0.1",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
+  }
+}

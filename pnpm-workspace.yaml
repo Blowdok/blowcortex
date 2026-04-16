@@ -1,0 +1,7 @@
+# Définition des workspaces du monorepo BlowCortex
+# https://pnpm.io/pnpm-workspace_yaml
+
+packages:
+  - apps/*
+  - packages/*
+  - tests

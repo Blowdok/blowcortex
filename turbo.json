@@ -1,0 +1,118 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["**/.env.*local", "tsconfig.base.json"],
+  "globalEnv": [
+    "NODE_ENV",
+    "BLOWCORTEX_BASE_URL",
+    "BLOWCORTEX_API_URL",
+    "ENCRYPTION_KEY",
+    "DATABASE_URL",
+    "DATABASE_DIRECT_URL",
+    "REDIS_URL",
+    "OPENROUTER_API_KEY",
+    "OPENROUTER_BASE_URL",
+    "OPENROUTER_DEFAULT_MODEL",
+    "OPENROUTER_MAX_TOKENS",
+    "OPENROUTER_HTTP_REFERER",
+    "OPENROUTER_X_TITLE",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "CLERK_SECRET_KEY",
+    "CLERK_JWT_PUBLIC_KEY",
+    "CLERK_WEBHOOK_SECRET",
+    "NEXT_PUBLIC_CLERK_SIGN_IN_URL",
+    "NEXT_PUBLIC_CLERK_SIGN_UP_URL",
+    "NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL",
+    "NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL",
+    "ZEP_API_KEY",
+    "ZEP_API_URL",
+    "INNGEST_EVENT_KEY",
+    "INNGEST_SIGNING_KEY",
+    "LANGFUSE_PUBLIC_KEY",
+    "LANGFUSE_SECRET_KEY",
+    "LANGFUSE_HOST",
+    "SENTRY_DSN_WEB",
+    "SENTRY_DSN_API",
+    "SENTRY_DSN_MOBILE",
+    "SENTRY_ORG",
+    "SENTRY_PROJECT_WEB",
+    "SENTRY_PROJECT_API",
+    "SENTRY_PROJECT_MOBILE",
+    "SENTRY_AUTH_TOKEN",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_REDIRECT_URI_DEV",
+    "GOOGLE_REDIRECT_URI_PROD",
+    "GCP_PROJECT_ID",
+    "GMAIL_PUBSUB_TOPIC",
+    "SLACK_CLIENT_ID",
+    "SLACK_CLIENT_SECRET",
+    "SLACK_SIGNING_SECRET",
+    "NOTION_CLIENT_ID",
+    "NOTION_CLIENT_SECRET",
+    "NOTION_REDIRECT_URI",
+    "R2_ACCOUNT_ID",
+    "R2_ACCESS_KEY_ID",
+    "R2_SECRET_ACCESS_KEY",
+    "R2_BUCKET",
+    "R2_ENDPOINT"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"],
+      "inputs": [
+        "src/**",
+        "app/**",
+        "public/**",
+        "package.json",
+        "tsconfig.json",
+        "next.config.*",
+        "tailwind.config.*",
+        "postcss.config.*"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "tests/**",
+        "vitest.config.*",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "outputs": ["playwright-report/**", "test-results/**"],
+      "cache": false
+    },
+    "db:generate": {
+      "outputs": ["drizzle/**", "infra/migrations/**"]
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

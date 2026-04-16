@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '22'
+  PNPM_VERSION: '10.18.2'
+  # Variables minimales requises par @blowcortex/core/loadServerEnv et le build
+  # Next.js (Clerk lit ces clés au prerender).
+  NODE_ENV: test
+  BLOWCORTEX_BASE_URL: http://localhost:3000
+  BLOWCORTEX_API_URL: http://localhost:3100
+  ENCRYPTION_KEY: ci-key-must-be-long-enough-for-zod-validation-32+
+  DATABASE_URL: postgresql://blowcortex:blowcortex@localhost:5432/blowcortex
+  DATABASE_DIRECT_URL: postgresql://blowcortex:blowcortex@localhost:5432/blowcortex
+  REDIS_URL: redis://localhost:6379
+  # Placeholders Clerk : format valide, ne fonctionnent pas réellement mais
+  # passent la validation au build. Les vraies clés sont des secrets de prod.
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_aHR0cHM6Ly9leGFtcGxlLmNsZXJrLmFjY291bnRzLmRldiQ
+  CLERK_SECRET_KEY: sk_test_dummy_value_for_build_only
+
+jobs:
+  qualité:
+    name: Lint • Typecheck • Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Configurer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Installer les dépendances
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Tests Vitest
+        run: pnpm test
+
+      - name: Build (smoke)
+        run: pnpm build

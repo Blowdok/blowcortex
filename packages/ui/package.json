@@ -1,0 +1,44 @@
+{
+  "name": "@blowcortex/ui",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Composants shadcn/ui partagés et primitives React utilisées par apps/web et apps/mobile (web).",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests",
+    "clean": "rimraf dist .turbo"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "tailwind-merge": "2.6.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@blowcortex/config": "workspace:*",
+    "@types/node": "22.10.5",
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.4",
+    "eslint": "9.18.0",
+    "react": "19.1.4",
+    "react-dom": "19.1.4",
+    "rimraf": "6.0.1",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
+  }
+}

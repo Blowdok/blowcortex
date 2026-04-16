@@ -28,14 +28,14 @@ La spécification produit complète, y compris l'architecture technique, les mod
 
 Ce dépôt contient plusieurs documents de référence. Ils sont organisés par public :
 
-| Document | Public | Objectif |
-|---|---|---|
-| [`PRD.md`](./PRD.md) | Implémentateur IA, ingénieurs | Spécification produit et technique complète. Source de vérité. |
-| [`external-services-setup.md`](./external-services-setup.md) | Humains | Comment configurer Clerk, Zep, OpenRouter, etc. |
-| [`DECISIONS.md`](./DECISIONS.md) | Tout le monde | Journal courant des décisions d'architecture, ambiguïtés et écarts. |
-| [`README.md`](./README.md) | Tout le monde | Vous êtes ici. Document d'orientation. |
-| [`ARCHITECTURE.md`](./ARCHITECTURE.md) | Ingénieurs | Diagrammes système et vue technique détaillée. Créé au Sprint 6. |
-| [`CONTRIBUTING.md`](./CONTRIBUTING.md) | Contributeurs | Comment travailler sur ce codebase. Créé au Sprint 6. |
+| Document                                                     | Public                        | Objectif                                                            |
+| ------------------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------- |
+| [`PRD.md`](./PRD.md)                                         | Implémentateur IA, ingénieurs | Spécification produit et technique complète. Source de vérité.      |
+| [`external-services-setup.md`](./external-services-setup.md) | Humains                       | Comment configurer Clerk, Zep, OpenRouter, etc.                     |
+| [`DECISIONS.md`](./DECISIONS.md)                             | Tout le monde                 | Journal courant des décisions d'architecture, ambiguïtés et écarts. |
+| [`README.md`](./README.md)                                   | Tout le monde                 | Vous êtes ici. Document d'orientation.                              |
+| [`ARCHITECTURE.md`](./ARCHITECTURE.md)                       | Ingénieurs                    | Diagrammes système et vue technique détaillée. Créé au Sprint 6.    |
+| [`CONTRIBUTING.md`](./CONTRIBUTING.md)                       | Contributeurs                 | Comment travailler sur ce codebase. Créé au Sprint 6.               |
 
 ---
 
@@ -52,7 +52,7 @@ Ce dépôt contient plusieurs documents de référence. Ils sont organisés par 
 
 ```bash
 # Cloner et entrer dans le dossier
-git clone <ce-dépôt> blowcortex && cd blowcortex
+git clone <https://github.com/Blowdok/blowcortex.git && cd blowcortex
 
 # Installer les dépendances
 pnpm install
@@ -75,6 +75,7 @@ pnpm dev
 ```
 
 Une fois lancé :
+
 - Application web : http://localhost:3000
 - API : http://localhost:3100
 - Tableau de bord Inngest : http://localhost:8288
@@ -122,20 +123,20 @@ Chaque dossier aura son propre README expliquant son rôle une fois implémenté
 
 ## Stack technique
 
-| Couche | Choix | Pourquoi |
-|---|---|---|
-| Langage | TypeScript 5.5+ (strict) | Sécurité de types de bout en bout |
-| Web | Next.js 15 + shadcn/ui + Tailwind | Itération rapide, design system solide |
-| Mobile | Expo + React Native | Logique partagée avec le web, notifications natives |
-| API | Hono on Node.js | Léger, prêt pour l'edge |
-| Framework agent | Vercel AI SDK + OpenRouter | API unique, multi-fournisseurs, MCP-friendly |
-| Événements | Inngest | Durable, serverless, event-driven |
-| Base relationnelle | PostgreSQL via Supabase | Éprouvé, écosystème riche |
-| Graphe mémoire | Zep (Graphiti) | Graphe de connaissances temporel avec fenêtres de validité |
-| Cache/Queue | Redis (Upstash) | Recherche vectorielle + pub/sub dans un même système |
-| LLM | OpenRouter (300+ modèles) | Liste récupérée dynamiquement via `GET /api/v1/models`, choix du modèle + `max_tokens` côté UI |
-| Auth | Clerk | Gère OAuth, MFA et sessions nativement |
-| Observabilité | Langfuse + Sentry | Tracing LLM + suivi des erreurs |
+| Couche             | Choix                             | Pourquoi                                                                                       |
+| ------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Langage            | TypeScript 5.5+ (strict)          | Sécurité de types de bout en bout                                                              |
+| Web                | Next.js 15 + shadcn/ui + Tailwind | Itération rapide, design system solide                                                         |
+| Mobile             | Expo + React Native               | Logique partagée avec le web, notifications natives                                            |
+| API                | Hono on Node.js                   | Léger, prêt pour l'edge                                                                        |
+| Framework agent    | Vercel AI SDK + OpenRouter        | API unique, multi-fournisseurs, MCP-friendly                                                   |
+| Événements         | Inngest                           | Durable, serverless, event-driven                                                              |
+| Base relationnelle | PostgreSQL via Supabase           | Éprouvé, écosystème riche                                                                      |
+| Graphe mémoire     | Zep (Graphiti)                    | Graphe de connaissances temporel avec fenêtres de validité                                     |
+| Cache/Queue        | Redis (Upstash)                   | Recherche vectorielle + pub/sub dans un même système                                           |
+| LLM                | OpenRouter (300+ modèles)         | Liste récupérée dynamiquement via `GET /api/v1/models`, choix du modèle + `max_tokens` côté UI |
+| Auth               | Clerk                             | Gère OAuth, MFA et sessions nativement                                                         |
+| Observabilité      | Langfuse + Sentry                 | Tracing LLM + suivi des erreurs                                                                |
 
 Pour la stack complète avec versions et justifications, voir [`PRD.md` Section 2](./PRD.md).
 
@@ -204,14 +205,14 @@ Objectif de couverture : **>=70%** sur `packages/core` et `packages/agents`. Les
 
 ### Avancement des sprints
 
-| Sprint | Focus | Statut |
-|---|---|---|
-| P1-S1 | Foundation (monorepo, DB, auth, deployment configs) | ⏳ Non commencé |
-| P1-S2 | Gmail connector + ingestion | ⏳ Non commencé |
-| P1-S3 | Engagement Detector agent | ⏳ Non commencé |
-| P1-S4 | Calendar + Meeting Briefer agent | ⏳ Non commencé |
-| P1-S5 | Actions + approval flow | ⏳ Non commencé |
-| P1-S6 | Observability + polish + beta launch | ⏳ Non commencé |
+| Sprint | Focus                                               | Statut          |
+| ------ | --------------------------------------------------- | --------------- |
+| P1-S1  | Foundation (monorepo, DB, auth, deployment configs) | ⏳ Non commencé |
+| P1-S2  | Gmail connector + ingestion                         | ⏳ Non commencé |
+| P1-S3  | Engagement Detector agent                           | ⏳ Non commencé |
+| P1-S4  | Calendar + Meeting Briefer agent                    | ⏳ Non commencé |
+| P1-S5  | Actions + approval flow                             | ⏳ Non commencé |
+| P1-S6  | Observability + polish + beta launch                | ⏳ Non commencé |
 
 Cette section est mise à jour par l'agent implémentateur à la fin de chaque sprint.
 
@@ -252,6 +253,7 @@ Les exigences de sécurité complètes se trouvent dans [`PRD.md` Section 13](./
 ### `pnpm install` échoue
 
 Assurez-vous d'avoir Node 20+ et pnpm 9+ :
+
 ```bash
 node --version    # >= 20
 pnpm --version    # >= 9
@@ -270,6 +272,7 @@ docker-compose -f infra/docker/docker-compose.yml logs postgres
 ```
 
 Réinitialiser si besoin :
+
 ```bash
 docker-compose -f infra/docker/docker-compose.yml down -v
 docker-compose -f infra/docker/docker-compose.yml up -d
@@ -279,6 +282,7 @@ pnpm db:migrate
 ### Les fonctions Inngest ne se déclenchent pas
 
 Le serveur de dev local Inngest doit tourner à part :
+
 ```bash
 pnpm inngest:dev
 ```
@@ -292,6 +296,7 @@ Vérifiez `OPENROUTER_API_KEY` dans `.env.local` (format : `sk-or-v1-...`). Si l
 ### Le webhook Clerk ne se déclenche pas en local
 
 Clerk ne peut pas atteindre `localhost`. Utilisez un tunnel :
+
 ```bash
 cloudflared tunnel --url http://localhost:3100
 # ou : ngrok http 3100
@@ -342,4 +347,4 @@ Ce dépôt est actuellement en développement privé. Pour toute question, ouvre
 
 ---
 
-*« Le meilleur outil est celui qui pense pour vous quand vous n'y pensez pas. »*
+_« Le meilleur outil est celui qui pense pour vous quand vous n'y pensez pas. »_

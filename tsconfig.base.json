@@ -21,7 +21,6 @@
     "useUnknownInCatchVariables": true,
     "exactOptionalPropertyTypes": false,
     "forceConsistentCasingInFileNames": true,
-    "incremental": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true

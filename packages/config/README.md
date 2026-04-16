@@ -11,7 +11,7 @@ Configurations partagées du monorepo BlowCortex.
 - `eslint/base.js` — config ESLint flat de base (TypeScript + Prettier)
 - `eslint/node.js` — config ESLint pour services Node.js
 - `eslint/react.js` — config ESLint pour libs React
-- `eslint/next.js` — config ESLint pour Next.js 15
+- `eslint/next.js` — config ESLint pour Next.js 16+
 - `prettier.config.js` — règles de formatage Prettier
 - `tailwind.preset.js` — preset Tailwind v4 (couleurs primaires, fonts, radius)
 

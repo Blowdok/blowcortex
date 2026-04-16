@@ -1,6 +1,6 @@
-// Middleware Next.js pour la protection des routes via Clerk.
-// Toutes les routes sont publiques par défaut au Sprint 1 ; les routes
-// protégées seront ajoutées au matcher au fur et à mesure des sprints.
+// Convention Next.js 16 : le fichier `proxy.ts` remplace `middleware.ts`.
+// Clerk publie toujours son handler sous le nom `clerkMiddleware` — seul le
+// fichier qui l'héberge change de nom côté Next.js.
 
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
@@ -26,9 +26,9 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and static files unless they appear in queries.
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jsons?|png|jpg|jpeg|gif|svg|ico|webp|avif|woff2?|ttf|eot|map)).*)',
-    // Always run middleware for API routes.
+    // Skip Next.js internals et fichiers statiques, sauf si présents en query.
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Toujours exécuter le proxy sur les routes API/tRPC.
     '/(api|trpc)(.*)',
   ],
 };

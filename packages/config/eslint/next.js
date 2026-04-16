@@ -1,4 +1,4 @@
-// Configuration ESLint pour Next.js 15 (apps/web).
+// Configuration ESLint pour Next.js 16+ (apps/web).
 
 import react from './react.js';
 import nextPlugin from '@next/eslint-plugin-next';

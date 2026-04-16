@@ -1,8 +1,6 @@
 {
   "extends": "@blowcortex/config/tsconfig/node",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
     "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.test.ts", "vitest.config.ts"],

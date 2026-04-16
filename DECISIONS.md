@@ -26,6 +26,42 @@ Les entrées sont append-only. Si une décision est annulée, ajoutez une nouvel
 
 <!-- New entries go below this line. Newest at the top. -->
 
+### Migration Next.js 15 → 16 et Clerk 6 → 7 (Core 3)
+
+**Date :** 2026-04-16
+**Décision :** `apps/web` est migré vers **Next.js 16.2.4** et **`@clerk/nextjs@7.2.1`** (Clerk Core 3), pendant la revue Sprint 1. Cette migration applique trois conventions récentes :
+
+1. **Fichier `proxy.ts`** (Next.js 16) au lieu de `middleware.ts` (déprécié). `src/middleware.ts` → `src/proxy.ts`. Le nom du handler Clerk (`clerkMiddleware`) et son comportement restent inchangés.
+2. **`<ClerkProvider>` placé dans `<body>`** (convention Core 3) au lieu d'envelopper `<html>`.
+3. **Composant unifié `<Show when="signed-in|signed-out">`** (Core 3) remplace `<SignedIn>` et `<SignedOut>` (retirés en Clerk 7).
+
+Script `lint` de `apps/web` : `next lint` → `eslint .` (Next 16 déprécie `next lint` au profit d'ESLint CLI direct).
+
+**Justification :**
+- Directive CLAUDE.md « toujours utiliser les dernières versions des packages npm ».
+- Le message utilisateur fournissant la quickstart Clerk/Next officielle confirme ces trois conventions.
+- Vérifié via `mcp-context7` sur `/clerk/clerk-nextjs-app-quickstart`, `/clerk/clerk-docs` et `/vercel/next.js`.
+- Zéro coût de régression : aucune fonctionnalité n'est perdue, toute la plomberie (auth, protection de routes, helpers serveur) reste fonctionnelle.
+
+**Alternatives envisagées :**
+- Rester sur Next.js 15 + Clerk 6 (rejeté — contredit CLAUDE.md et la demande explicite du superviseur).
+- Upgrade Clerk uniquement (rejeté — Clerk 7.2.1 requiert Next ≥ 15.2.8, on était en 15.1.4 de toute façon).
+
+**Impact technique :**
+- `apps/web/package.json` : `next` 15.1.4 → 16.2.4, `@clerk/nextjs` 6.10.0 → 7.2.1, `eslint-config-next` 15.1.4 → 16.2.4.
+- `apps/web/src/middleware.ts` supprimé, `apps/web/src/proxy.ts` créé.
+- `apps/web/src/app/layout.tsx` : `<ClerkProvider>` à l'intérieur de `<body>`, header global avec `<Show>`.
+- `apps/web/src/app/page.tsx` : `<SignedIn>`/`<SignedOut>` remplacés par `<Show>`.
+- `apps/web/package.json` script `lint` : `next lint` → `eslint .`.
+
+**Effet secondaire positif :** le bundle `apps/web` build en 3.3 s avec Turbopack (activé par défaut en Next 16).
+
+**Effet secondaire neutre :** le preset `@blowcortex/config/tsconfig/node` ne définit plus `rootDir`/`outDir` (résolution relative qui cassait l'héritage). Ces champs sont maintenant définis dans `tsconfig.build.json` de chaque package, quand le build est lancé.
+
+**Statut :** active
+
+---
+
 ### Sprint 1 livré — résumé et observations
 
 **Date :** 2026-04-16
